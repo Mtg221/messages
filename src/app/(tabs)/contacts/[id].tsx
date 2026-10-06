@@ -2,9 +2,11 @@ import { View, Text, StyleSheet, Pressable } from "react-native";
 import { Image } from "expo-image";
 import { useLocalSearchParams, Stack, useRouter } from "expo-router";
 import { CONTACTS } from "@/data/contacts";
+import { useFavourites } from "@/context/FavouritesContext";
 
 export default function ContactDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { isFavourite, toggle } = useFavourites();
   const router = useRouter();
   const contact = CONTACTS.find((c) => c.id === id);
 
@@ -18,7 +20,16 @@ export default function ContactDetail() {
 
   return (
     <View style={styles.screen}>
-      <Stack.Screen options={{ title: contact.name }} />
+      <Stack.Screen
+        options={{
+          title: contact.name,
+          headerRight: () => (
+            <Pressable onPress={() => toggle(contact.id)}>
+              <Text style={{ fontSize: 22 }}>{isFavourite(contact.id) ? "★" : "☆"}</Text>
+            </Pressable>
+          ),
+        }}
+      />
 
       <Image
         source={`https://i.pravatar.cc/200?u=${contact.id}`}
@@ -26,6 +37,12 @@ export default function ContactDetail() {
       />
       <Text style={styles.name}>{contact.name}</Text>
       <Text style={styles.program}>{contact.program}</Text>
+
+      <Pressable style={styles.favButton} onPress={() => toggle(contact.id)}>
+        <Text style={styles.favLabel}>
+          {isFavourite(contact.id) ? "★ Favourite" : "☆ Add to favourites"}
+        </Text>
+      </Pressable>
 
       <Pressable style={styles.button} onPress={() => router.navigate("/contacts/chat")}>
         <Text style={styles.buttonLabel}>Send a message</Text>
@@ -40,7 +57,10 @@ const styles = StyleSheet.create({
   name:    { fontSize: 22, fontWeight: "bold" },
   program: { fontSize: 15, color: "#666" },
   missing: { color: "#888", paddingTop: 32 },
+  favButton: { borderWidth: 1, borderColor: "#f39c12", borderRadius: 24,
+               paddingVertical: 10, paddingHorizontal: 20, marginTop: 16 },
+  favLabel:  { color: "#b9770e", fontWeight: "600" },
   button:      { backgroundColor: "#1a5276", paddingVertical: 12,
-                 paddingHorizontal: 24, borderRadius: 24, marginTop: 16 },
+                 paddingHorizontal: 24, borderRadius: 24, marginTop: 8 },
   buttonLabel: { color: "#fff", fontWeight: "600" },
 });

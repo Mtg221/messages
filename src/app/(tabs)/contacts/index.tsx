@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, FlatList, TextInput, Pressable } from "react-na
 import { Link } from "expo-router";
 import { ContactRow } from "@/components/ContactRow";
 import { CONTACTS } from "@/data/contacts";
+import { useFavourites } from "@/context/FavouritesContext";
 
 export default function Contacts() {
   const [query, setQuery] = useState("");
+  const { isFavourite } = useFavourites();
 
   const filtered = useMemo(
     () =>
@@ -26,7 +28,7 @@ export default function Contacts() {
             asChild
           >
             <Pressable>
-              <ContactRow contact={item} />
+              <ContactRow contact={item} favourite={isFavourite(item.id)} />
             </Pressable>
           </Link>
         )}

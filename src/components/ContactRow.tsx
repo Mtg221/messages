@@ -4,7 +4,13 @@ import { CONTACTS } from "@/data/contacts";
 
 type Contact = typeof CONTACTS[number];
 
-export function ContactRow({ contact }: { contact: Contact }) {
+export function ContactRow({
+  contact,
+  favourite = false,
+}: {
+  contact: Contact;
+  favourite?: boolean;
+}) {
   return (
     <View style={styles.row}>
       <Image
@@ -15,6 +21,7 @@ export function ContactRow({ contact }: { contact: Contact }) {
         <Text style={styles.name}>{contact.name}</Text>
         <Text style={styles.program}>{contact.program}</Text>
       </View>
+      {favourite && <Text style={styles.star}>★</Text>}
     </View>
   );
 }
@@ -25,4 +32,5 @@ const styles = StyleSheet.create({
   rowText: { flex: 1 },
   name:    { fontSize: 16, fontWeight: "600" },
   program: { fontSize: 13, color: "#666" },
+  star:    { fontSize: 18, color: "#f39c12" },
 });
