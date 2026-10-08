@@ -20,7 +20,6 @@ export default function Favourites() {
             </Pressable>
           </Link>
         )}
-        HeaderComponent={null}
         ListHeaderComponent={
           favourites.length > 0 ? (
             <View style={styles.headerRow}>
