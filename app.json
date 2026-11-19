@@ -32,6 +32,19 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "DAUST Messenger accesses your photo library when you tap the attach button so you can choose a photo to send in a conversation.",
+          "cameraPermission": "DAUST Messenger accesses your camera when you tap the camera button so you can take a photo to send in a conversation."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "DAUST Messenger accesses your location when you tap the location button so you can share your current position in a conversation."
+        }
       ]
     ],
     "experiments": {
